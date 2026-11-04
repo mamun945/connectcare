@@ -33,7 +33,7 @@ const UpcomingEventPage = async ({
   const token = await getTokenFromServer();
   
   const res = await fetch(
-    `http://localhost:5000/upcoming-events/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/upcoming-events/${id}`,
      {
     cache: "no-store",
     headers: {

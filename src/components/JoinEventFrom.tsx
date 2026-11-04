@@ -26,7 +26,7 @@ const JoinEventForm = ({ joineventInfo }:) => {
     const checkJoined = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/joinevent/check/${joineventInfo._id}/${user.id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/joinevent/check/${joineventInfo._id}/${user.id}`
         );
 
         if (res.ok) {
@@ -58,7 +58,7 @@ const JoinEventForm = ({ joineventInfo }:) => {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/joinevent", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/joinevent`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

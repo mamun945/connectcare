@@ -3,7 +3,7 @@ import EventsFilter from "@/components/EventFilter";
 
 
 const UpcomingEventsPage = async () => {
-  const res = await fetch("http://localhost:5000/upcoming-events", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upcoming-events`, {
     cache: "no-store",
   });
 

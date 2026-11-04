@@ -79,7 +79,7 @@ const ManageEventEditPage = ({ eventData }:{eventData:Event}) => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/upcoming-events/${eventData._id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/upcoming-events/${eventData._id}`,
         {
           method: "PATCH",
           headers: {

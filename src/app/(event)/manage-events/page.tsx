@@ -28,7 +28,7 @@ const ManageEventPage = async () => {
   const user = session?.user;
 
   const res = await fetch(
-    `http://localhost:5000/upcoming-events/email/${user?.email}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/upcoming-events/email/${user?.email}`,
     {
       cache: "no-store",
       headers: {

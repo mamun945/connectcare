@@ -18,8 +18,9 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { JoinedEvent } from "@/app/lib/type";
 
-const JoinEventCardPage = ({ joinData }) => {
+const JoinEventCardPage = ({ joinData }:{joinData:JoinedEvent}) => {
   const {
     eventId,
     title,
@@ -31,7 +32,9 @@ const JoinEventCardPage = ({ joinData }) => {
     joinDate,
   } = joinData;
 
-  const formatDate = (date) => {
+  const formatDate = (date: string | undefined) => {
+    if (!date) return "Date unavailable";
+
     return new Date(`${date}T00:00:00`).toLocaleDateString("en-US", {
       day: "numeric",
       month: "long",
@@ -39,7 +42,9 @@ const JoinEventCardPage = ({ joinData }) => {
     });
   };
 
-  const formatJoinDate = (date) => {
+  const formatJoinDate = (date: string | undefined) => {
+    if (!date) return "Date unavailable";
+
     return new Date(date).toLocaleDateString("en-US", {
       day: "numeric",
       month: "long",

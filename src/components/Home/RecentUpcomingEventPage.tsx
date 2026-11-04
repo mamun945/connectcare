@@ -1,11 +1,12 @@
 import React from 'react';
 import EventsCardPage from '../EventsCard';
+import { Event } from '@/app/lib/type';
 
 const RecentUpcomingEventPage = async () => {
-    const res = await fetch('http://localhost:5000/upcoming-events')
-    const datas = await res.json();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upcoming-events`)
+    const datas:Event[] = await res.json();
     const sortedJoinDatas = datas.sort(
-        (a, b) => new Date(a.eventDate) - new Date(b.eventDate)
+        (a, b) => new Date(a.eventDate ?? '').getTime() - new Date(b.eventDate ?? '').getTime()
     );
     return (
         <div className='container mx-auto my-7'>

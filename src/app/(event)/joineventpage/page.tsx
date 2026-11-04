@@ -12,7 +12,7 @@ const JoinEventPage = async () => {
     headers: await headers() // you need to pass the headers object.
 })
 const user = session?.user;
-  const res = await fetch(`http://localhost:5000/joinevent/${user?.email}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/joinevent/${user?.email}`, {
     cache: "no-store",
     headers: {
       authorization: `Bearer ${token}`,

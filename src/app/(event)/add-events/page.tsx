@@ -73,7 +73,7 @@ const AddEventsPage = () => {
       setSuccess(false);
 
       // Event data ready for API
-      const res = await fetch('http://localhost:5000/add-events',{
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-events`,{
           method: 'POST',
           headers:{
             "Content-Type":"application/json",
