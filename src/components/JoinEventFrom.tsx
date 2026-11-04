@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/button";
 import { toast } from "./ui/toast";
 import { authClient } from "@/app/lib/auth-client";
 import { getTokenFromClient } from "@/app/lib/getTokenFromClient";
+import { Event } from "@/app/lib/type";
 
-const JoinEventForm = ({ joineventInfo }:) => {
+const JoinEventForm = ({ joineventInfo }:{joineventInfo:Event}) => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
