@@ -57,7 +57,7 @@ export default function ManageEventDeletePage({ eventData }:{eventData:Event}) {
     } catch (error) {
       toast.add({
         type: "error",
-        description: error.message || "Something went wrong!",
+        description:"Something went wrong!",
       });
     } finally {
       setLoading(false);
@@ -66,7 +66,7 @@ export default function ManageEventDeletePage({ eventData }:{eventData:Event}) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
+      <AlertDialogTrigger >
         <Button
           variant="destructive"
           className="flex-1 shadow-sm transition-all hover:shadow-md"
@@ -115,7 +115,7 @@ export default function ManageEventDeletePage({ eventData }:{eventData:Event}) {
           {/* Action Buttons */}
           <AlertDialogFooter className="flex-col-reverse gap-2 sm:flex-row">
 
-            <AlertDialogCancel asChild>
+            <AlertDialogCancel>
               <Button
                 variant="outline"
                 disabled={loading}
