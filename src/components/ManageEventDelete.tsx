@@ -19,19 +19,25 @@ import {
 import { Button } from "@/components/ui/button";
 import { Trash2, AlertTriangle, Loader2 } from "lucide-react";
 import { toast } from "./ui/toast";
+import { getTokenFromClient } from "@/app/lib/getTokenFromClient";
+import { Event } from "@/app/lib/type";
 
-export default function ManageEventDeletePage({ eventData }) {
+export default function ManageEventDeletePage({ eventData }:{eventData:Event}) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
     setLoading(true);
+    const token = await getTokenFromClient();
 
     try {
       const res = await fetch(
         `http://localhost:5000/upcoming-events/${eventData._id}`,
         {
           method: "DELETE",
+          headers: {
+            authorization: `Bearer ${token}`,
+          }
         }
       );
 

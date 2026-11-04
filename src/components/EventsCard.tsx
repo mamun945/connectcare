@@ -21,16 +21,18 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Event } from "@/app/lib/type";
 
-const EventsCardPage = ({ event }) => {
-  const formattedDate = new Date(event.eventDate).toLocaleDateString(
-    "en-US",
-    {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    }
-  );
+
+
+const EventsCardPage = ({ event }: { event: Event }) => {
+  const formattedDate = event.eventDate
+    ? new Date(event.eventDate).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : "Date unavailable";
 
   return (
     <Card className="group overflow-hidden border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">

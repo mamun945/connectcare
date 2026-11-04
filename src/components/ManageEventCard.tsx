@@ -22,16 +22,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ManageEventEditPage from "./ManageEventEdit";
 import ManageEventDeletePage from "./ManageEventDelete";
+import { Event } from "@/app/lib/type";
 
-const ManageEventCardPage = ({ eventData}) => {
-  const formattedDate = new Date(eventData.eventDate).toLocaleDateString(
+const ManageEventCardPage = ({ eventData }: { eventData: Event }) => {
+  const formattedDate = eventData.eventDate
+    ? new Date(eventData.eventDate).toLocaleDateString(
     "en-US",
     {
       day: "numeric",
       month: "long",
       year: "numeric",
     }
-  );
+  )
+    : "Date unavailable";
 
   return (
     <Card className="group overflow-hidden border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">

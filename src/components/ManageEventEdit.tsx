@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -44,9 +44,11 @@ import {
 } from "lucide-react";
 import { toast } from "./ui/toast";
 import { useRouter } from "next/navigation";
+import { getTokenFromClient } from "@/app/lib/getTokenFromClient";
+import { Event } from "@/app/lib/type";
 
 
-const ManageEventEditPage = ({ eventData }) => {
+const ManageEventEditPage = ({ eventData }:{eventData:Event}) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(eventData.thumbnail || "");
   const [eventType, setEventType] = useState(eventData.eventType);
@@ -60,9 +62,9 @@ const ManageEventEditPage = ({ eventData }) => {
 
   const minDate = tomorrow.toISOString().split("T")[0];
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    const token = await getTokenFromClient();
     const form = e.currentTarget;
     const formData = new FormData(form);
 
@@ -82,6 +84,7 @@ const ManageEventEditPage = ({ eventData }) => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(updateData),
         }

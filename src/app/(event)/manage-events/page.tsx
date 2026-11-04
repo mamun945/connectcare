@@ -14,6 +14,9 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { getTokenFromServer } from "@/app/lib/getTokenFromServer";
+import type { ComponentProps } from "react";
+
+type ManageEvent = ComponentProps<typeof ManageEventCardPage>["eventData"];
 
 const ManageEventPage = async () => {
 
@@ -25,14 +28,17 @@ const ManageEventPage = async () => {
   const user = session?.user;
 
   const res = await fetch(
-    `http://localhost:5000/upcoming-events/email/${encodeURIComponent(user?.email || ""),{
-      headers:{
-        authorization :`Bearer ${token}`
-      }
-    }}`
+    `http://localhost:5000/upcoming-events/email/${user?.email}`,
+    {
+      cache: "no-store",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
   );
 
-  const datas = res.ok ? await res.json() : [];
+
+  const datas: ManageEvent[] = res.ok ? await res.json() : [];
 
   return (
     <div className="container mx-auto space-y-8 px-4 py-10">
@@ -145,9 +151,9 @@ const ManageEventPage = async () => {
       ) : (
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {datas.map((data) => (
+          {datas.map((data, index) => (
             <ManageEventCardPage
-              key={data._id}
+              key={index}
               eventData={data}
             />
           ))}

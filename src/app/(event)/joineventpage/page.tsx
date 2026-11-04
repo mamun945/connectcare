@@ -1,16 +1,29 @@
 
 import JoinEventCardPage from "@/components/JoinEventCard";
-import React from "react";
 import { HeartHandshake, Leaf, Sparkles } from "lucide-react";
+import { auth } from "@/app/lib/auth";
+import { headers } from "next/headers";
+import { getTokenFromServer } from "@/app/lib/getTokenFromServer";
+import { JoinedEvent } from "@/app/lib/type";
 
 const JoinEventPage = async () => {
-  const res = await fetch("http://localhost:5000/joinevent", {
+    const token = await getTokenFromServer();
+  const session = await auth.api.getSession({
+    headers: await headers() // you need to pass the headers object.
+})
+const user = session?.user;
+  const res = await fetch(`http://localhost:5000/joinevent/${user?.email}`, {
     cache: "no-store",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
   });
 
-  const joinDatas = await res.json();
+  const joinDatas:JoinedEvent[] = await res.json();
   const sortedJoinDatas = joinDatas.sort(
-    (a, b) => new Date(a.eventDate) - new Date(b.eventDate)
+    (a, b) =>
+      new Date(a.eventDate ?? "").getTime() -
+      new Date(b.eventDate ?? "").getTime()
   );
 
   return (

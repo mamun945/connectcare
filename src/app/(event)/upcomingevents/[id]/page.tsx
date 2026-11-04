@@ -19,10 +19,15 @@ import {
 import { Separator } from "@/components/ui/separator";
 import JoinEventForm from "@/components/JoinEventFrom";
 import { getTokenFromServer } from "@/app/lib/getTokenFromServer";
+import { Event } from "@/app/lib/type";
 
 
 
-const UpcomingEventPage = async ({ params }) => {
+const UpcomingEventPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
   const { id } = await params;
   
   const token = await getTokenFromServer();
@@ -48,7 +53,7 @@ const UpcomingEventPage = async ({ params }) => {
     );
   }
 
-  const data = await res.json();
+  const data: Event = await res.json();
 
   const formattedDate = new Date(
     `${data.eventDate}T00:00:00`

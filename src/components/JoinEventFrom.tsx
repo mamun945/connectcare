@@ -1,12 +1,13 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "./ui/toast";
 import { authClient } from "@/app/lib/auth-client";
+import { getTokenFromClient } from "@/app/lib/getTokenFromClient";
 
-const JoinEventForm = ({ joineventInfo }) => {
+const JoinEventForm = ({ joineventInfo }:) => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
@@ -40,8 +41,9 @@ const JoinEventForm = ({ joineventInfo }) => {
     checkJoined();
   }, [user?.id, joineventInfo?._id]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const token = await getTokenFromClient();
 
     if (!user) {
       return toast.add({
@@ -60,6 +62,7 @@ const JoinEventForm = ({ joineventInfo }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           eventId:joineventInfo?._id,

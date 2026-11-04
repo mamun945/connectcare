@@ -1,12 +1,20 @@
-import EventsCardPage from "@/components/EventsCard";
+import { Event } from "@/app/lib/type";
+import EventsFilter from "@/components/EventFilter";
 
 
 const UpcomingEventsPage = async () => {
-  const res = await fetch("http://localhost:5000/upcoming-events");
-  const events = await res.json();
+  const res = await fetch("http://localhost:5000/upcoming-events", {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch events");
+  }
+
+  const events:Event[] = await res.json();
 
   return (
-    <div className="container mx-auto px-4 py-10 space-y-12">
+    <div className="container mx-auto space-y-12 px-4 py-10">
 
       {/* Events Heading */}
       <section id="events" className="space-y-3 text-center">
@@ -21,12 +29,8 @@ const UpcomingEventsPage = async () => {
         <div className="mx-auto h-1 w-16 rounded-full bg-green-600" />
       </section>
 
-      {/* Event Cards */}
-      <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {events.map((event) => (
-          <EventsCardPage key={event._id} event={event} />
-        ))}
-      </section>
+      {/* Filtering + Event Cards */}
+      <EventsFilter events={events} />
 
     </div>
   );
